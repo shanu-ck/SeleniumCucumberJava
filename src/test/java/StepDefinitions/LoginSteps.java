@@ -2,6 +2,7 @@ package StepDefinitions;
 
 import java.time.Duration;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,15 +15,14 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LoginSteps {
 	WebDriver driver = null;
 
 	@Before
 	public void before() {
-		String driverPath = System.getProperty("user.dir");
-		System.setProperty("webdriver.chrome.driver", driverPath + "/src/test/resources/drivers/chromedriver.exe");
-
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
@@ -64,5 +64,14 @@ public class LoginSteps {
 			throw new Exception("Dashboard page is not opened");
 		}
 	}
+
+    @Then("I verify login failed with some error message")
+    public void I_verify_login_failed_with_some_error_message() {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
+		By errorMsgLocator = By.xpath("//form//p");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(errorMsgLocator));
+		String errorMsgText = driver.findElement(errorMsgLocator).getText();
+		Assert.assertNotEquals("", errorMsgText);
+    }
 
 }

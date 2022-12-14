@@ -11,7 +11,8 @@ plugin= {"pretty", "html:target/HtmlReport.html",
 		"json:target/JsonReport.json",
 		"junit:target/JunitReport.xml"
 		},
-publish=true
+publish=true,
+tags = "@testLoginFailed"
 	)
 public class TestRunner {
 
