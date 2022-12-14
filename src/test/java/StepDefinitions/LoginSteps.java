@@ -25,7 +25,7 @@ public class LoginSteps {
 	public void before() {
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();  
-		options.setHeadless(true);
+		// options.setHeadless(true);
 		driver = new ChromeDriver(options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
