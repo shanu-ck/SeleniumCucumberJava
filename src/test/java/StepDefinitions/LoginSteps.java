@@ -24,8 +24,11 @@ public class LoginSteps {
 	@Before
 	public void before() {
 		WebDriverManager.chromedriver().setup();
-		ChromeOptions options = new ChromeOptions();  
-		// options.setHeadless(true);
+		ChromeOptions options = new ChromeOptions();
+		options.setHeadless(true);
+		options.addArguments("--disable-gpu");
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
 		driver = new ChromeDriver(options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
@@ -58,23 +61,23 @@ public class LoginSteps {
 
 	@Then("I verify dashbord page is opened")
 	public void i_verify_dashbord_page_is_opened() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//button[@type='submit']")));
 
 		String currentUrl = driver.getCurrentUrl();
 		if (!currentUrl.contains("dashboard")) {
-			System.out.println("Current URL = "+ currentUrl);
+			System.out.println("Current URL = " + currentUrl);
 			throw new Exception("Dashboard page is not opened");
 		}
 	}
 
-    @Then("I verify login failed with some error message")
-    public void I_verify_login_failed_with_some_error_message() {
-		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
+	@Then("I verify login failed with some error message")
+	public void I_verify_login_failed_with_some_error_message() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		By errorMsgLocator = By.xpath("//form//p");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(errorMsgLocator));
 		String errorMsgText = driver.findElement(errorMsgLocator).getText();
 		Assert.assertNotEquals("", errorMsgText);
-    }
+	}
 
 }
