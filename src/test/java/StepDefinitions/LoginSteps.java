@@ -23,7 +23,7 @@ public class LoginSteps {
 
 	@Before
 	public void before() {
-		WebDriverManager.chromedriver().setup();
+		WebDriverManager.chromedriver().driverVersion("108.0.5359.124").setup();
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(true);
 		options.addArguments("--disable-gpu");
