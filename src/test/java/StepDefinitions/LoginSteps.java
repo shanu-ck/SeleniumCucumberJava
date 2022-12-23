@@ -23,12 +23,12 @@ public class LoginSteps {
 
 	@Before
 	public void before() {
-		WebDriverManager.chromedriver().driverVersion("108.0.5359.124").setup();
+		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(true);
-		options.addArguments("--disable-gpu");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
+		// options.addArguments("--disable-gpu");
+		// options.addArguments("--no-sandbox");
+		// options.addArguments("--disable-dev-shm-usage");
 		driver = new ChromeDriver(options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));

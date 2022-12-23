@@ -5,15 +5,13 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features="src/test/resources/Features/login.feature",
-glue= {"StepDefinitions"},
-plugin= {"pretty", "html:target/HtmlReport.html",
+@CucumberOptions(features = "src/test/resources/Features/login.feature", glue = { "StepDefinitions" }, plugin = {
+		"pretty", "html:target/HtmlReport.html",
 		"json:target/JsonReport.json",
 		"junit:target/JunitReport.xml"
-		},
-publish=true,
-tags = "@testLoginFailed"
-	)
+}, 
+tags = "@testLogin",
+publish = true)
 public class TestRunner {
 
 }
