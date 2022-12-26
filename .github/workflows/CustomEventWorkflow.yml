@@ -19,12 +19,13 @@ jobs:
       - name: Build with Maven
         env:
           MY_TEST_VARIABLE: "This is my test variable"
-          CUSTOM_EXECUTION_COMMAND: ${{ github.event.client_payload.executeCommand }}
+          CUSTOM_EXECUTION_COMMAND: ${{ github.event.client_payload.executionCommand }}
           JIRA_PROJECT_KEY: ${{ github.event.client_payload.jiraProjectKey }}
         run: |
           echo "$MY_TEST_VARIABLE"
           echo "$JIRA_PROJECT_KEY"
           echo "$CUSTOM_EXECUTION_COMMAND"
+          ${{ github.event.client_payload.executionCommand }}
 
       - uses: actions/upload-artifact@v3
         with:
