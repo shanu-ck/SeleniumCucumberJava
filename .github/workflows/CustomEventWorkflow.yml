@@ -28,12 +28,14 @@ jobs:
           ${{ github.event.client_payload.executionCommand }}
 
       - uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: target
           path: target
 
       - name: AIO Tests Jira App integration with Github Action
         uses: shanu-ck/Jira-AIO-Action@v1
+        if: always()
         with:
           token: ${{ secrets.AIO_API_TOKEN }}
           filePath: "target/JsonReport.json"
