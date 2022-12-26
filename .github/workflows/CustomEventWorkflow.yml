@@ -18,8 +18,11 @@ jobs:
           cache: maven
       - name: Build with Maven
         env:
+          MY_TEST_VARIABLE: "This is my test variable"
           CUSTOM_EXECUTION_COMMAND: ${{ github.event.client_payload.executeCommand }}
-        run: echo "$CUSTOM_EXECUTION_COMMAND"
+        run: |
+          echo "$MY_TEST_VARIABLE"
+          echo "$CUSTOM_EXECUTION_COMMAND"
 
       - uses: actions/upload-artifact@v3
         with:
