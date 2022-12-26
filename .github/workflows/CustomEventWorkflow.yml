@@ -24,8 +24,8 @@ jobs:
           name: target
           path: target
 
-      - name: Jira AIO Tests with Github Action
-        uses: ShanuDey/Jira-AIO-Action@v2
+      - name: AIO Tests Jira App integration with Github Action
+        uses: shanu-ck/Jira-AIO-Action@v1
         with:
           token: ${{ secrets.AIO_API_TOKEN }}
           filePath: "target/JsonReport.json"
