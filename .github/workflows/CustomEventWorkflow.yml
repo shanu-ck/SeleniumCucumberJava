@@ -17,8 +17,9 @@ jobs:
           distribution: "temurin"
           cache: maven
       - name: Build with Maven
-        run: |
-          echo ${{ github.event.client_payload.executeCommand }}
+        env:
+          CUSTOM_EXECUTION_COMMAND: ${{ github.event.client_payload.executeCommand }}
+        run: echo "$CUSTOM_EXECUTION_COMMAND"
 
       - uses: actions/upload-artifact@v3
         with:
