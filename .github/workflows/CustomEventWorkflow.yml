@@ -1,0 +1,37 @@
+name: Custom event workflow
+
+on:
+  repository_dispatch:
+    types: [execute-tests]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+          distribution: "temurin"
+          cache: maven
+      - name: Build with Maven
+        run: ${{ github.event.client_payload.executeCommand }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: target
+          path: target
+
+      - name: Jira AIO Tests with Github Action
+        uses: ShanuDey/Jira-AIO-Action@v2
+        with:
+          token: ${{ secrets.AIO_API_TOKEN }}
+          filePath: "target/JsonReport.json"
+          jiraProjectKey: ${{ github.event.client_payload.jiraProjectKey }}
+          aioCycleKey: ${{ github.event.client_payload.aioCycleKey }}
+          createNewRun: true
+          addCaseToCycle: false
+          createCase: false
+          bddForceUpdateCase: true
