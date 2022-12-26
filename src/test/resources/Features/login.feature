@@ -10,6 +10,6 @@ Feature: Verify logic test scenarios
   @FIR-TC-5
   Scenario: Verify login failed failed scenario
     Given I am on the login page
-    When I enter email "test@test.com" and password "testpassword"
+    When I enter email "blah@blah.com" and password "veryeasy"
     And I click on login button
     Then I verify login failed with some error message
