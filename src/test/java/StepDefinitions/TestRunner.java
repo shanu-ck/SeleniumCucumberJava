@@ -8,10 +8,9 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(features = "src/test/resources/Features/login.feature", glue = { "StepDefinitions" }, plugin = {
 		"pretty", "html:target/HtmlReport.html",
 		"json:target/JsonReport.json",
+		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 		"junit:target/JunitReport.xml"
-}, 
-tags = "@testLogin",
-publish = true)
+}, publish = true)
 public class TestRunner {
 
 }

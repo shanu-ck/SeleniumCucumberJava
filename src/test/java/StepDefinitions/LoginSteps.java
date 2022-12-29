@@ -4,6 +4,8 @@ import java.time.Duration;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,7 +14,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -38,6 +42,15 @@ public class LoginSteps {
 	@After
 	public void after() {
 		driver.quit();
+	}
+
+	public byte[] getByteScreenshot() {
+		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	}
+
+	@AfterStep
+	public void afterStep(Scenario scenario) {
+		scenario.attach(getByteScreenshot(), "image/png", scenario.getName());
 	}
 
 	@Given("I am on the login page")
