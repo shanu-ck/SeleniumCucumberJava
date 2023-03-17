@@ -29,6 +29,7 @@ public class LoginSteps {
 	public void before() {
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--remote-allow-origins=*");
 		options.setHeadless(true);
 		// options.addArguments("--disable-gpu");
 		// options.addArguments("--no-sandbox");
@@ -46,6 +47,12 @@ public class LoginSteps {
 
 	public byte[] getByteScreenshot() {
 		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+		// getScenario.write("Scenario failed so capturing a screenshot");
+            
+// TakesScreenshot screenshot = (TakesScreenshot) WebDriverRunner.getWebDriver();
+// byte[] image = screenshot.getScreenshotAs(OutputType.BYTES);
+            
+// getScenario.embed(image, "image/png");
 	}
 
 	@AfterStep
@@ -54,12 +61,12 @@ public class LoginSteps {
 	}
 
 	@Given("I am on the login page")
-	public void i_am_on_the_login_page() {
+	public void iAmOnTheLoginPage() {
 		driver.navigate().to("https://shanudey.github.io/task-management-ui/#/login");
 	}
 
 	@When("^I enter email \"(.*)\" and password \"(.*)\"$")
-	public void i_enter_email_and_password(String email, String password) {
+	public void iEnterEmailAndPassword(String email, String password) {
 		WebElement emailTextBox = driver.findElement(By.id("email"));
 		emailTextBox.sendKeys(email);
 		WebElement passwordTextBox = driver.findElement(By.id("password"));
@@ -67,13 +74,13 @@ public class LoginSteps {
 	}
 
 	@When("I click on login button")
-	public void i_click_on_login_button() {
+	public void iClickOnLoginButton() {
 		WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
 		loginButton.click();
 	}
 
 	@Then("I verify dashbord page is opened")
-	public void i_verify_dashbord_page_is_opened() throws Exception {
+	public void iVerifyDashbordPageIsOpened() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//button[@type='submit']")));
 
@@ -85,7 +92,7 @@ public class LoginSteps {
 	}
 
 	@Then("I verify login failed with some error message")
-	public void I_verify_login_failed_with_some_error_message() {
+	public void iVerifyLoginFailedWithSomeErrorMessage() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		By errorMsgLocator = By.xpath("//form//p");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(errorMsgLocator));
