@@ -1,6 +1,14 @@
 package StepDefinitions;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.Duration;
+
+import javax.imageio.ImageIO;
+import java.awt.Color;
+import java.awt.Image;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -45,18 +53,35 @@ public class LoginSteps {
 		driver.quit();
 	}
 
-	public byte[] getByteScreenshot() {
-		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-		// getScenario.write("Scenario failed so capturing a screenshot");
-            
-// TakesScreenshot screenshot = (TakesScreenshot) WebDriverRunner.getWebDriver();
-// byte[] image = screenshot.getScreenshotAs(OutputType.BYTES);
-            
-// getScenario.embed(image, "image/png");
+	public byte[] getByteScreenshot() throws IOException{
+		byte[] image = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+		return scaleImage(image);
 	}
 
+	private static byte[] scaleImage(byte[] imageBytes) throws IOException {
+		//declare scaled image dimentions
+		int imageWidth = 800;
+		int imageHeight = 600;
+        //create InputStream for ImageIO using png byte[]
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+        //read png bytes as an image
+        BufferedImage bufferedImage = ImageIO.read(bais);
+		//scale image as specified dimention
+		Image scaledImage = bufferedImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+		//create a buffered image canvas for the output
+        BufferedImage newBufferedImage = new BufferedImage(imageWidth, imageHeight,BufferedImage.TYPE_INT_RGB);
+		// create BufferedImage from Image
+        newBufferedImage.createGraphics().drawImage(scaledImage, 0, 0, Color.WHITE, null);
+        //create OutputStream to write prepaired jpg bytes
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //write image as PNG bytes
+        ImageIO.write(newBufferedImage, "PNG", baos);
+        //convert OutputStream to a byte[]
+        return baos.toByteArray();
+    }
+
 	@AfterStep
-	public void afterStep(Scenario scenario) {
+	public void afterStep(Scenario scenario) throws IOException {
 		scenario.attach(getByteScreenshot(), "image/png", scenario.getName());
 	}
 

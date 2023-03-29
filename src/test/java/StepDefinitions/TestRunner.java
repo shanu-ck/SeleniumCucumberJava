@@ -12,19 +12,20 @@ import courgette.api.junit.Courgette;
 @CourgetteOptions(
         threads = 10,
         runLevel = CourgetteRunLevel.SCENARIO,
-        rerunFailedScenarios = true,
+        // rerunFailedScenarios = true,
         testOutput = CourgetteTestOutput.CONSOLE,
         reportTargetDir = "target",
         cucumberOptions = @CucumberOptions(
                 features = "src/test/resources/Features/login.feature",
                 glue = { "StepDefinitions" },
                 // tags = {"@regression", "not @excluded"},
-                publish = true,
-                plugin = {
-                        "pretty",
-                        "json:target/cucumber-report/cucumber.json",
-                        "html:target/cucumber-report/cucumber.html",
-                        "junit:target/cucumber-report/cucumber.xml"}
+                publish = true
+                // plugin = {
+                //         "pretty",
+                //         // "json:target/cucumber-report/cucumber.json",
+                //         // "html:target/cucumber-report/cucumber.html",
+                //         "junit:target/cucumber-report/cucumber.xml"
+                // }
         ))
 public class TestRunner {
 
