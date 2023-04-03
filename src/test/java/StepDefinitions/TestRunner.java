@@ -1,16 +1,29 @@
 package StepDefinitions;
 
 import org.junit.runner.RunWith;
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/Features/login.feature", glue = { "StepDefinitions" }, plugin = {
+import courgette.api.CourgetteOptions;
+import courgette.api.CourgetteRunLevel;
+import courgette.api.CourgetteTestOutput;
+import courgette.api.CucumberOptions;
+import courgette.api.junit.Courgette;
+
+@RunWith(Courgette.class)
+@CourgetteOptions(
+threads = 10, 
+runLevel = CourgetteRunLevel.SCENARIO, 
+testOutput = CourgetteTestOutput.CONSOLE, 
+reportTargetDir = "target", 
+cucumberOptions = @CucumberOptions(
+	features = "src/test/resources/Features/login.feature", 
+	glue = { "StepDefinitions" }, 
+	plugin = {
 		"pretty", "html:target/HtmlReport.html",
 		"json:target/JsonReport.json",
-		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 		"junit:target/JunitReport.xml"
-}, publish = true)
+	}, 
+	publish = true)
+)
 public class TestRunner {
 
 }
